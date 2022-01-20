@@ -7,7 +7,7 @@ import Phaser from 'phaser';
 
 var tank;
 var input;
-var mouseLocation = [0, 0];
+var mouseLocation = new Phaser.Math.Vector2();
 var mouseText;
 var mouseTextLocation = [600, 25];
 var tankLocation = [100, 300];
@@ -32,7 +32,6 @@ export default class GameScene extends Phaser.Scene {
         // var r1 = this.add.rectangle(200, 200, 148, 148, 0x6666ff);
 
         tank = new Tank(this, tankLocation[0], tankLocation[1]);
-
         mouseText = new TextBox(this, mouseTextLocation[0], mouseTextLocation[1]);
 
         this.input.on('pointerdown', function (pointer) {
@@ -42,33 +41,34 @@ export default class GameScene extends Phaser.Scene {
 
     update ()
     {
-        mouseText.text = "pointer x: " + mouseLocation[0] + "\n" + "pointer y: " + mouseLocation[1];
+        mouseText.text = "pointer x: " + mouseLocation.x + "\n" + "pointer y: " + mouseLocation.y;
 
         let tankAngle = Phaser.Math.Angle.Between(tank.x, tank.y, input.x, input.y);
         tank.setRotation(tankAngle + Math.PI/2);
 
+        console.log(tank.currentTarget);
         this.updateMouseLocation(input);
     }
 
     updateMouseLocation (inputObject)
     {
-        mouseLocation[0] = inputObject.x;
-        mouseLocation[1] = inputObject.y;
+        mouseLocation.x = inputObject.x;
+        mouseLocation.y = inputObject.y;
     }
 
     /**
-    * @param {Array} targetCoords
+    * @param {Vector2} targetCoords
     */
 
     setTankLocation (tankObject, targetCoords)
     {
-        tankObject.x = targetCoords[0];
-        tankObject.y = targetCoords[1];
+        tankObject.x = targetCoords.x;
+        tankObject.y = targetCoords.y;
     }
 
     moveTankToLocation (tankObject, targetCoords)
     {
-        console.log(tankObject);
-        this.physics.moveToObject(tankObject, targetCoords, 200);
+        tankObject.currentTarget = targetCoords;
+        this.physics.moveTo(tankObject, targetCoords.x, targetCoords.y, 100);       
     }
 };
