@@ -77,14 +77,10 @@ export default class PreloaderScene extends Phaser.Scene {
         
         this.load.audio('bgMusic', ['assets/Komiku_-_07_-_Run_against_the_universe.mp3']);
 
-        this.load.image('sky', 'assets/sky.png');
-        this.load.image('ground', 'assets/platform.png');
-        this.load.image('star', 'assets/star.png');
-        this.load.image('bomb', 'assets/bomb.png');
-        this.load.spritesheet('dude', 'assets/dude.png', { frameWidth: 32, frameHeight: 48 });
+        this.load.image('background', 'assets/background.png');
 
-        this.load.image('menuBG', 'assets/sky.png');
-        this.load.image('aboutBG', 'assets/sky.png');
+        this.load.image('menuBG', 'assets/background.png');
+        this.load.image('aboutBG', 'assets/background.png');
         this.load.image('deathScene', 'assets/deathScene.png');
 
         this.load.image('Button', 'assets/button1.png');
@@ -92,6 +88,8 @@ export default class PreloaderScene extends Phaser.Scene {
         this.load.image('box', 'assets/box.png');
         this.load.image('checkedBox', 'assets/checked1.png');
         this.load.image('Logo', 'assets/logoBigger.png');
+
+        this.load.image('Tank', 'assets/tank.png');
 
         // remove progress bar when complete
         this.load.on('complete', function () {
