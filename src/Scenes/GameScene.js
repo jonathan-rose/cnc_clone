@@ -3,6 +3,7 @@ import { Rectangle } from 'phaser/src/gameobjects';
 import Tank from '../Objects/Tank';
 import Button from '../Objects/Button';
 import TextBox from '../Objects/TextBox';
+import Phaser from 'phaser';
 
 var tank;
 var input;
@@ -35,7 +36,7 @@ export default class GameScene extends Phaser.Scene {
         mouseText = new TextBox(this, mouseTextLocation[0], mouseTextLocation[1]);
 
         this.input.on('pointerdown', function (pointer) {
-            this.setTankLocation(tank, mouseLocation);
+            this.moveTankToLocation(tank, mouseLocation);
         }, this);
     }
 
@@ -63,5 +64,11 @@ export default class GameScene extends Phaser.Scene {
     {
         tankObject.x = targetCoords[0];
         tankObject.y = targetCoords[1];
+    }
+
+    moveTankToLocation (tankObject, targetCoords)
+    {
+        console.log(tankObject);
+        this.physics.moveToObject(tankObject, targetCoords, 200);
     }
 };
