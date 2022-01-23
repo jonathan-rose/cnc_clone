@@ -22,7 +22,7 @@ export default class GameScene extends Phaser.Scene {
     {
         // Get scene input
         // this.input gets Phaser.Input.InputPlugin
-        // Subsequent references to x and y members will refer 
+        // Subsequent references to x and y members of input will refer 
         // to current active Phaser.Input.Point object
         input = this.input;      
 
@@ -35,8 +35,20 @@ export default class GameScene extends Phaser.Scene {
         mouseText = new TextBox(this, mouseTextLocation[0], mouseTextLocation[1]);
 
         this.input.on('pointerdown', function (pointer) {
-            this.setTankTarget(tank, mouseLocation.x, mouseLocation.y);
-            this.moveTankToLocation(tank);
+            tank.setTargetCoords(mouseLocation.x, mouseLocation.y);
+
+            var curveToClick = new Phaser.Curves.Line([tank.x, tank.y, mouseLocation.x, mouseLocation.y]);
+            var tankPath = this.add.path();
+            tankPath.add(curveToClick);
+
+            var tween = this.tweens.add({
+                targets: tank,
+                x: tank.currentTargetCoords.x,
+                y: tank.currentTargetCoords.y,
+                duration: 2000,
+                ease: 'Power4',
+            });
+
         }, this);
     }
 
@@ -49,7 +61,7 @@ export default class GameScene extends Phaser.Scene {
 
         this.updateMouseLocation(input);
 
-        if (Math.trunc(tank.x) == tank.currentTarget.x && Math.trunc(tank.y) == tank.currentTarget.y) {
+        if (Math.trunc(tank.x) == tank.currentTargetCoords.x && Math.trunc(tank.y) == tank.currentTargetCoords.y) {
             console.log("Reporting for duty!");
             tank.setVelocity(0, 0);
         }
@@ -59,24 +71,5 @@ export default class GameScene extends Phaser.Scene {
     {
         mouseLocation.x = inputObject.x;
         mouseLocation.y = inputObject.y;
-    }
-
-    /**
-    * @param {Vector2} targetCoords
-    */
-
-    setTankLocation (tankObject, x, y)
-    {
-        tankObject.x = x;
-        tankObject.y = y;
-    }
-
-    setTankTarget (tankObject, x, y){
-        tankObject.currentTarget.set(x, y);
-    }
-
-    moveTankToLocation (tankObject)
-    {
-        this.physics.moveTo(tankObject, tankObject.currentTarget.x, tankObject.currentTarget.y, tankObject.speed);       
     }
 };

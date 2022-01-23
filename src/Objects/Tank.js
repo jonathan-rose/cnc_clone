@@ -7,12 +7,22 @@ export default class Tank extends Phaser.Physics.Arcade.Sprite {
         this.x = x;
         this.y = y;
         this.speed = 200;
-        this.currentTarget = new Phaser.Math.Vector2(100, 300);
+        this.currentTargetCoords = new Phaser.Math.Vector2(100, 300);
         // this.setOrigin(0,0);
         
         this.setInteractive();
 
         this.scene.physics.add.existing(this);
         this.scene.add.existing(this);
+    }
+
+    setLocation (x, y)
+    {
+        this.x = x;
+        this.y = y;
+    }
+
+    setTargetCoords (x, y){
+        this.currentTargetCoords.set(x, y);
     }
 }
