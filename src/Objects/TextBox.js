@@ -5,6 +5,8 @@ export default class TextBox extends Phaser.GameObjects.Text {
     constructor(scene, x, y) {
         super(scene, x, y);
         this.scene = scene;
+        this.x = x;
+        this.y = y;
 
         // As an extension of Phaser.GameObjects.Text
         // it has all the members of the base class
