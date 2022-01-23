@@ -29,13 +29,14 @@ export default class GameScene extends Phaser.Scene {
         //  Add background
         this.add.image(400, 300, 'background');
 
-        // var r1 = this.add.rectangle(200, 200, 148, 148, 0x6666ff);
+        var r1 = this.add.rectangle(200, 200, 148, 148, 0x6666ff);
 
         tank = new Tank(this, tankLocation[0], tankLocation[1]);
         mouseText = new TextBox(this, mouseTextLocation[0], mouseTextLocation[1]);
 
         this.input.on('pointerdown', function (pointer) {
-            this.moveTankToLocation(tank, mouseLocation);
+            this.setTankTarget(tank, mouseLocation.x, mouseLocation.y);
+            this.moveTankToLocation(tank);
         }, this);
     }
 
@@ -46,8 +47,12 @@ export default class GameScene extends Phaser.Scene {
         let tankAngle = Phaser.Math.Angle.Between(tank.x, tank.y, input.x, input.y);
         tank.setRotation(tankAngle + Math.PI/2);
 
-        console.log(tank.currentTarget);
         this.updateMouseLocation(input);
+
+        if (Math.trunc(tank.x) == tank.currentTarget.x && Math.trunc(tank.y) == tank.currentTarget.y) {
+            console.log("Reporting for duty!");
+            tank.setVelocity(0, 0);
+        }
     }
 
     updateMouseLocation (inputObject)
@@ -60,15 +65,18 @@ export default class GameScene extends Phaser.Scene {
     * @param {Vector2} targetCoords
     */
 
-    setTankLocation (tankObject, targetCoords)
+    setTankLocation (tankObject, x, y)
     {
-        tankObject.x = targetCoords.x;
-        tankObject.y = targetCoords.y;
+        tankObject.x = x;
+        tankObject.y = y;
     }
 
-    moveTankToLocation (tankObject, targetCoords)
+    setTankTarget (tankObject, x, y){
+        tankObject.currentTarget.set(x, y);
+    }
+
+    moveTankToLocation (tankObject)
     {
-        tankObject.currentTarget = targetCoords;
-        this.physics.moveTo(tankObject, targetCoords.x, targetCoords.y, 100);       
+        this.physics.moveTo(tankObject, tankObject.currentTarget.x, tankObject.currentTarget.y, tankObject.speed);       
     }
 };
