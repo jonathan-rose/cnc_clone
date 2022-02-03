@@ -4,6 +4,7 @@ import Tank from '../Objects/Tank';
 import Button from '../Objects/Button';
 import TextBox from '../Objects/TextBox';
 import Phaser from 'phaser';
+import { Path } from 'phaser/src/curves';
 
 var tank;
 var input;
@@ -37,9 +38,16 @@ export default class GameScene extends Phaser.Scene {
         testPath.add(testCurve);
 
         //  Add background
-        this.add.image(400, 300, 'background');
+        var background = this.add.image(0, 0, 'background');
+
+        background.displayHeight = this.sys.game.config.height;
+        background.scaleX = background.scaleY;
+        background.y = game.config.height / 2;
+        background.x = game.config.width / 2;
+        background.depth = -1;
 
         var r1 = this.add.rectangle(200, 200, 148, 148, 0xED1C24);
+        r1.depth = -1;
 
         tank = new Tank(this, tankLocation[0], tankLocation[1]);
         mouseText = new TextBox(this, mouseTextLocation[0], mouseTextLocation[1]);
@@ -56,19 +64,8 @@ export default class GameScene extends Phaser.Scene {
             // tankPath = this.add.path();
             tankPath.add(clickCurve);
             tankPath.add(tankToBaseCurve);
+            tank.currentPath = tankPath;
             
-            // console.log(tankPath);
-
-            var tween = this.tweens.add({
-                targets: tank,
-                x: tank.currentTargetCoords.x,
-                y: tank.currentTargetCoords.y,
-                duration: 2000,
-                ease: 'Power4',
-            });
-
-            // console.log(this.tweens);
-
         }, this);
     }
 
@@ -83,9 +80,9 @@ export default class GameScene extends Phaser.Scene {
         graphics.clear();
         graphics.lineStyle(2, 0xffffff, 1);
 
-        tankPath.draw(graphics);
-        console.log(tankPath);
-        graphics.fillStyle(0xff0000, 1);
+        // When the tank class is constructed, its default path is (0,0)
+        // This might be it is constantly drawing a 0-dimensional line in that location
+        tank.currentPath.draw(graphics);
     }
 
     updateMouseLocation (inputObject)

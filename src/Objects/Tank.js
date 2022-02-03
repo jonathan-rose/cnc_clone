@@ -1,4 +1,5 @@
 import 'phaser';
+import Phaser from 'phaser';
 
 export default class Tank extends Phaser.Physics.Arcade.Sprite {
     constructor(scene, x, y) {
@@ -7,8 +8,9 @@ export default class Tank extends Phaser.Physics.Arcade.Sprite {
         this.x = x;
         this.y = y;
         this.speed = 200;
-        this.currentTargetCoords = new Phaser.Math.Vector2(100, 300);
+        this.currentTargetCoords = new Phaser.Math.Vector2(x, y);
         // this.setOrigin(0,0);
+        this.currentPath = new Phaser.Curves.Path(0, 0);
         
         this.setInteractive();
 
