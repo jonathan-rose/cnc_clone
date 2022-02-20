@@ -2,9 +2,9 @@ import 'phaser';
 import Phaser from 'phaser';
 
 // Can I make this work by changing it to a Phaser.GameObjects.PathFollower?
-export default class Tank extends Phaser.Physics.Arcade.Sprite {
-    constructor(scene, x, y) {
-        super(scene, x, y, "Tank");
+export default class Tank extends Phaser.GameObjects.PathFollower {
+    constructor(scene, path, x, y, texture) {
+        super(scene, path, x, y, "Tank");
         this.scene = scene;
         this.x = x;
         this.y = y;

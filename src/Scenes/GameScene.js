@@ -49,22 +49,24 @@ export default class GameScene extends Phaser.Scene {
         var r1 = this.add.rectangle(200, 200, 148, 148, 0xED1C24);
         r1.depth = -1;
 
-        tank = new Tank(this, tankLocation[0], tankLocation[1]);
+        tank = new Tank(this, tankPath, tankLocation[0], tankLocation[1]);
         mouseText = new TextBox(this, mouseTextLocation[0], mouseTextLocation[1]);
 
         this.input.on('pointerdown', function (pointer) {
             tank.setTargetCoords(mouseLocation.x, mouseLocation.y);
 
             var clickCurve = new Phaser.Curves.Line([tank.x, tank.y, tank.currentTargetCoords.x, tank.currentTargetCoords.y]);
-            var tankToBaseCurve = new Phaser.Curves.Line([tank.currentTargetCoords.x, tank.currentTargetCoords.y, r1.x, r1.y]);
+            // var tankToBaseCurve = new Phaser.Curves.Line([tank.currentTargetCoords.x, tank.currentTargetCoords.y, r1.x, r1.y]);
 
             // Adding the tankPath object has to happen outside the pointerdown function
             // Otherwise it doesn't exist when the scene starts
             // Because nobody has clicked yet
             // tankPath = this.add.path();
             tankPath.add(clickCurve);
-            tankPath.add(tankToBaseCurve);
+            // tankPath.add(tankToBaseCurve);
             tank.currentPath = tankPath;
+
+            tank.startFollow(4000);
             
         }, this);
     }
@@ -81,7 +83,7 @@ export default class GameScene extends Phaser.Scene {
         graphics.lineStyle(2, 0xffffff, 1);
 
         // When the tank class is constructed, its default path is (0,0)
-        // This might be it is constantly drawing a 0-dimensional line in that location
+        // This might mean it is constantly drawing a 0-dimensional line in that location
         tank.currentPath.draw(graphics);
     }
 
