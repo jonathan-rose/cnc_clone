@@ -56,17 +56,15 @@ export default class GameScene extends Phaser.Scene {
             tank.setTargetCoords(mouseLocation.x, mouseLocation.y);
 
             var clickCurve = new Phaser.Curves.Line([tank.x, tank.y, tank.currentTargetCoords.x, tank.currentTargetCoords.y]);
-            // var tankToBaseCurve = new Phaser.Curves.Line([tank.currentTargetCoords.x, tank.currentTargetCoords.y, r1.x, r1.y]);
+        
+            tank.setPath(clickCurve);
+            tank.currentPath = tankPath; // startFollow doesn't actually use this yet
 
-            // Adding the tankPath object has to happen outside the pointerdown function
-            // Otherwise it doesn't exist when the scene starts
-            // Because nobody has clicked yet
-            // tankPath = this.add.path();
-            tankPath.add(clickCurve);
-            // tankPath.add(tankToBaseCurve);
-            tank.currentPath = tankPath;
-
-            tank.startFollow(4000);
+            tank.startFollow({
+                positionOnPath:true,
+                rotateToPath: true,
+                // duration: 4000
+            });
             
         }, this);
     }
@@ -76,8 +74,8 @@ export default class GameScene extends Phaser.Scene {
         mouseText.text = "pointer x: " + mouseLocation.x + "\n" + "pointer y: " + mouseLocation.y;
         this.updateMouseLocation(input);
 
-        let tankAngle = Phaser.Math.Angle.Between(tank.x, tank.y, input.x, input.y);
-        tank.setRotation(tankAngle + Math.PI/2);
+        // let tankAngle = Phaser.Math.Angle.Between(tank.x, tank.y, input.x, input.y);
+        // tank.setRotation(tankAngle + Math.PI/2);
 
         graphics.clear();
         graphics.lineStyle(2, 0xffffff, 1);

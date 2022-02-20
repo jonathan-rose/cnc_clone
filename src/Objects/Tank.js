@@ -1,7 +1,6 @@
 import 'phaser';
 import Phaser from 'phaser';
 
-// Can I make this work by changing it to a Phaser.GameObjects.PathFollower?
 export default class Tank extends Phaser.GameObjects.PathFollower {
     constructor(scene, path, x, y, texture) {
         super(scene, path, x, y, "Tank");
@@ -12,6 +11,9 @@ export default class Tank extends Phaser.GameObjects.PathFollower {
         this.currentTargetCoords = new Phaser.Math.Vector2(x, y);
         // this.setOrigin(0,0);
         this.currentPath = new Phaser.Curves.Path(0, 0);
+
+        // startFollow method is not currently using path stored in class
+        // It used the path var in the GameScene
         
         this.setInteractive();
 
