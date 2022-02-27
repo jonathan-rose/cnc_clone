@@ -6,6 +6,7 @@ import TextBox from '../Objects/TextBox';
 import Phaser from 'phaser';
 import { Path } from 'phaser/src/curves';
 import { Linear } from 'phaser/src/math';
+import Rock from '../Objects/Rock';
 
 var tank;
 var input;
@@ -50,6 +51,8 @@ export default class GameScene extends Phaser.Scene {
         var r1 = this.add.rectangle(200, 200, 148, 148, 0xED1C24);
         r1.depth = -1;
 
+        var rock = new Rock(this, 500, 300);
+
         tank = new Tank(this, tankPath, tankLocation[0], tankLocation[1]);
         mouseText = new TextBox(this, mouseTextLocation[0], mouseTextLocation[1]);
 
@@ -59,10 +62,9 @@ export default class GameScene extends Phaser.Scene {
             tank.makePath();
 
             tank.startFollow({
-                positionOnPath:true,
+                positionOnPath: true,
                 rotateToPath: true,
                 ease: 'Linear',
-                // easeParams: [ 2 ], // Set to variable relative to distance to travel
                 duration: tank.pathTime
             });
             
@@ -82,7 +84,7 @@ export default class GameScene extends Phaser.Scene {
 
         // When the tank class is constructed, its default path is (0,0)
         // This might mean it is constantly drawing a 0-dimensional line in that location
-        tank.path.draw(graphics);
+        // tank.path.draw(graphics);
     }
 
     updateMouseLocation (inputObject)
