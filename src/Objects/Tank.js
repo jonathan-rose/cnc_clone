@@ -1,18 +1,42 @@
 import 'phaser';
+import Phaser from 'phaser';
 
-export default class Tank extends Phaser.Physics.Arcade.Sprite {
-    constructor(scene, x, y) {
-        super(scene, x, y, "Tank");
+export default class Tank extends Phaser.GameObjects.PathFollower {
+    constructor(scene, path, x, y, texture) {
+        super(scene, path, x, y, "Tank");
         this.scene = scene;
         this.x = x;
         this.y = y;
-        this.speed = 200;
-        this.currentTarget = new Phaser.Math.Vector2(100, 300);
-        // this.setOrigin(0,0);
-        
-        this.setInteractive();
+        this.speed = 50;
+        this.currentTargetCoords = new Phaser.Math.Vector2(x, y);
 
+        this.path = new Phaser.Curves.Path(0, 0);
+        this.pathLength = 0;
+        this.pathTime = 0;
+       
+        this.setInteractive();
         this.scene.physics.add.existing(this);
         this.scene.add.existing(this);
+    }
+
+    setLocation (x, y)
+    {
+        this.x = x;
+        this.y = y;
+    }
+
+    setTargetCoords (x, y){
+        this.currentTargetCoords.set(x, y);
+    }
+
+    setPathTime () {
+        this.pathLength = this.path.getLength();
+        this.pathTime = (this.pathLength / this.speed) * 100;
+    }
+
+    makePath () {
+        var path = new Phaser.Curves.Line([this.x, this.y, this.currentTargetCoords.x, this.currentTargetCoords.y]);
+        this.setPath(path);
+        this.setPathTime();
     }
 }
