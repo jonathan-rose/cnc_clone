@@ -58,7 +58,6 @@ export default class GameScene extends Phaser.Scene {
             var clickCurve = new Phaser.Curves.Line([tank.x, tank.y, tank.currentTargetCoords.x, tank.currentTargetCoords.y]);
         
             tank.setPath(clickCurve);
-            tank.currentPath = tankPath; // startFollow doesn't actually use this yet
 
             tank.startFollow({
                 positionOnPath:true,
@@ -82,7 +81,7 @@ export default class GameScene extends Phaser.Scene {
 
         // When the tank class is constructed, its default path is (0,0)
         // This might mean it is constantly drawing a 0-dimensional line in that location
-        tank.currentPath.draw(graphics);
+        tank.path.draw(graphics);
     }
 
     updateMouseLocation (inputObject)

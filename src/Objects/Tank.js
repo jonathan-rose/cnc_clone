@@ -10,7 +10,7 @@ export default class Tank extends Phaser.GameObjects.PathFollower {
         this.speed = 200;
         this.currentTargetCoords = new Phaser.Math.Vector2(x, y);
         // this.setOrigin(0,0);
-        this.currentPath = new Phaser.Curves.Path(0, 0);
+        this.path = new Phaser.Curves.Path(0, 0);
 
         // startFollow method is not currently using path stored in class
         // It used the path var in the GameScene
