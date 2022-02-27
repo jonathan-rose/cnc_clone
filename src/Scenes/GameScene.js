@@ -27,10 +27,6 @@ export default class GameScene extends Phaser.Scene {
 
     create ()
     {
-        // Get scene input
-        // this.input gets Phaser.Input.InputPlugin
-        // Subsequent references to x and y members of input will refer 
-        // to current active Phaser.Input.Point object
         input = this.input;
         graphics = this.add.graphics();
 
