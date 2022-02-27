@@ -5,6 +5,7 @@ import Button from '../Objects/Button';
 import TextBox from '../Objects/TextBox';
 import Phaser from 'phaser';
 import { Path } from 'phaser/src/curves';
+import { Linear } from 'phaser/src/math';
 
 var tank;
 var input;
@@ -55,14 +56,14 @@ export default class GameScene extends Phaser.Scene {
         this.input.on('pointerdown', function (pointer) {
             tank.setTargetCoords(mouseLocation.x, mouseLocation.y);
 
-            var clickCurve = new Phaser.Curves.Line([tank.x, tank.y, tank.currentTargetCoords.x, tank.currentTargetCoords.y]);
-        
-            tank.setPath(clickCurve);
+            tank.makePath();
 
             tank.startFollow({
                 positionOnPath:true,
                 rotateToPath: true,
-                // duration: 4000
+                ease: 'Linear',
+                // easeParams: [ 2 ], // Set to variable relative to distance to travel
+                duration: tank.pathTime
             });
             
         }, this);
