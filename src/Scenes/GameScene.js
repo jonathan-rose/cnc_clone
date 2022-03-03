@@ -24,9 +24,25 @@ export default class GameScene extends Phaser.Scene {
         super('Game');
     }
 
+    preload () {
+        this.load.image("tiles1", "assets/tiles/tiles1.png");
+        this.load.tilemapTiledJSON("map1", "assets/tiles/tiles1.json");
+    }
+
 
     create ()
     {
+
+        // Use JSON from preload() to make tilemap
+        // tileWidth and tileHeight refer to dimensions of Tiled tilemap
+        // NOT tile px size
+        const tileWidth = 10;
+        const tileHeight = 10;
+        this.map = this.make.tilemap({key: "map1", tileWidth: tileWidth, tileHeight: tileHeight});
+        // First parameter should be name of tileset as seen in Tiled tilesets list
+        const tileset = this.map.addTilesetImage("tiles1", "tiles1");
+        const groundLayer = this.map.createLayer("ground", tileset, 0, 0);
+
         input = this.input;
         graphics = this.add.graphics();
 
