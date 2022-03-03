@@ -41,7 +41,8 @@ export default class GameScene extends Phaser.Scene {
         this.map = this.make.tilemap({key: "map1", tileWidth: tileWidth, tileHeight: tileHeight});
         // First parameter should be name of tileset as seen in Tiled tilesets list
         const tileset = this.map.addTilesetImage("tiles1", "tiles1");
-        const groundLayer = this.map.createLayer("ground", tileset, 0, 0);
+        
+        let groundLayer = this.map.createLayer("ground", tileset, 0, 0);
 
         input = this.input;
         graphics = this.add.graphics();
