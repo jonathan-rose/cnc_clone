@@ -36,21 +36,23 @@ export default class GameScene extends Phaser.Scene {
         // Use JSON from preload() to make tilemap
         // tileWidth and tileHeight refer to dimensions of Tiled tilemap
         // NOT tile px size
-        const tileWidth = 10;
-        const tileHeight = 10;
+        const tileWidth = 32;
+        const tileHeight = 32;
         this.map = this.make.tilemap({key: "map1", tileWidth: tileWidth, tileHeight: tileHeight});
         // First parameter should be name of tileset as seen in Tiled tilesets list
         const tileset = this.map.addTilesetImage("tiles1", "tiles1");
         
         let groundLayer = this.map.createLayer("ground", tileset, 0, 0);
+        let rocksLayer = this.map.getObjectLayer("rockObjects");
+
+        this.rocks = this.add.group();
+
+        rocksLayer.objects.forEach(o => {
+            this.rocks.add(new Rock(this, o.x, o.y));
+        });
 
         input = this.input;
         graphics = this.add.graphics();
-
-        testPath = new Phaser.Curves.Path();
-        testCurve = new Phaser.Curves.Line([0, 0, 500, 500]);
-
-        testPath.add(testCurve);
 
         //  Add background
         var background = this.add.image(0, 0, 'background');
@@ -63,8 +65,6 @@ export default class GameScene extends Phaser.Scene {
 
         var r1 = this.add.rectangle(200, 200, 148, 148, 0xED1C24);
         r1.depth = -1;
-
-        var rock = new Rock(this, 500, 300);
 
         tank = new Tank(this, tankPath, tankLocation[0], tankLocation[1]);
         mouseText = new TextBox(this, mouseTextLocation[0], mouseTextLocation[1]);
