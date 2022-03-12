@@ -6,6 +6,7 @@ import TextBox from '../Objects/TextBox';
 import Phaser from 'phaser';
 import { Path } from 'phaser/src/curves';
 import { Linear } from 'phaser/src/math';
+import Rock from '../Objects/Rock';
 
 var tank;
 var input;
@@ -23,20 +24,35 @@ export default class GameScene extends Phaser.Scene {
         super('Game');
     }
 
+    preload () {
+        this.load.image("tiles1", "assets/tiles/tiles1.png");
+        this.load.tilemapTiledJSON("map1", "assets/tiles/tiles1.json");
+    }
+
 
     create ()
     {
-        // Get scene input
-        // this.input gets Phaser.Input.InputPlugin
-        // Subsequent references to x and y members of input will refer 
-        // to current active Phaser.Input.Point object
+
+        // Use JSON from preload() to make tilemap
+        // tileWidth and tileHeight refer to dimensions of Tiled tilemap
+        // NOT tile px size
+        const tileWidth = 32;
+        const tileHeight = 32;
+        this.map = this.make.tilemap({key: "map1", tileWidth: tileWidth, tileHeight: tileHeight});
+        // First parameter should be name of tileset as seen in Tiled tilesets list
+        const tileset = this.map.addTilesetImage("tiles1", "tiles1");
+        
+        let groundLayer = this.map.createLayer("ground", tileset, 0, 0);
+        let rocksLayer = this.map.getObjectLayer("rockObjects");
+
+        this.rocks = this.add.group();
+
+        rocksLayer.objects.forEach(o => {
+            this.rocks.add(new Rock(this, o.x, o.y));
+        });
+
         input = this.input;
         graphics = this.add.graphics();
-
-        testPath = new Phaser.Curves.Path();
-        testCurve = new Phaser.Curves.Line([0, 0, 500, 500]);
-
-        testPath.add(testCurve);
 
         //  Add background
         var background = this.add.image(0, 0, 'background');
@@ -59,10 +75,9 @@ export default class GameScene extends Phaser.Scene {
             tank.makePath();
 
             tank.startFollow({
-                positionOnPath:true,
+                positionOnPath: true,
                 rotateToPath: true,
                 ease: 'Linear',
-                // easeParams: [ 2 ], // Set to variable relative to distance to travel
                 duration: tank.pathTime
             });
             
@@ -82,7 +97,7 @@ export default class GameScene extends Phaser.Scene {
 
         // When the tank class is constructed, its default path is (0,0)
         // This might mean it is constantly drawing a 0-dimensional line in that location
-        tank.path.draw(graphics);
+        // tank.path.draw(graphics);
     }
 
     updateMouseLocation (inputObject)
