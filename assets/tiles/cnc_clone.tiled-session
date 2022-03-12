@@ -3,7 +3,7 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "tiles.tmx",
+    "activeFile": "tiles1.tmx",
     "expandedProjectPaths": [
     ],
     "file.lastUsedOpenFilter": "All Files (*)",
@@ -94,6 +94,17 @@
         },
         "tiles.tmx#tiles1": {
             "scaleInDock": 1
+        },
+        "tiles1.tmx": {
+            "scale": 0.75,
+            "selectedLayer": 1,
+            "viewCenter": {
+                "x": 452,
+                "y": 307.33333333333326
+            }
+        },
+        "tiles1.tmx#tiles1": {
+            "scaleInDock": 1
         }
     },
     "last.exportedFilePath": "D:/Projects/cnc_clone/assets/tiles",
@@ -107,11 +118,12 @@
     "map.lastUsedFormat": "tmx",
     "map.width": 10,
     "openFiles": [
-        "tiles.tmx"
+        "tiles1.tmx"
     ],
     "project": "cnc_clone.tiled-project",
-    "property.type": "float",
+    "property.type": "bool",
     "recentFiles": [
+        "tiles1.tmx",
         "tiles.tmx",
         "D:/Projects/cnc_clone/assets/tilemap/tilemap1.tmx",
         "D:/Projects/cnc_clone/assets/sprites/spritesheet1.json",
