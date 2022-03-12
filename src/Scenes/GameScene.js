@@ -18,8 +18,6 @@ var tileTextLocation = [600, 60];
 var tankLocation = [100, 300];
 var tankPath = new Phaser.Curves.Path();
 var graphics;
-var testPath;
-var testCurve;
 var map;
 
 export default class GameScene extends Phaser.Scene {
@@ -57,9 +55,6 @@ export default class GameScene extends Phaser.Scene {
         input = this.input;
         graphics = this.add.graphics();
 
-        // var r1 = this.add.rectangle(200, 200, 148, 148, 0xED1C24);
-        // r1.depth = -1;
-
         tank = new Tank(this, tankPath, tankLocation[0], tankLocation[1], map);
         mouseText = new TextBox(this, mouseTextLocation[0], mouseTextLocation[1]);
         tileText = new TextBox(this, tileTextLocation[0], tileTextLocation[1]);
@@ -92,15 +87,8 @@ export default class GameScene extends Phaser.Scene {
   
         this.updateMouseLocation(input);
 
-        // let tankAngle = Phaser.Math.Angle.Between(tank.x, tank.y, input.x, input.y);
-        // tank.setRotation(tankAngle + Math.PI/2);
-
         graphics.clear();
         graphics.lineStyle(2, 0xffffff, 1);
-
-        // When the tank class is constructed, its default path is (0,0)
-        // This might mean it is constantly drawing a 0-dimensional line in that location
-        // tank.path.draw(graphics);
     }
 
     updateMouseLocation (inputObject) {

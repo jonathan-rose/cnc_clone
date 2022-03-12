@@ -7,8 +7,8 @@ export default class PreloaderScene extends Phaser.Scene {
 
     preload () {
         // add logo image
-        var logo = this.add.image(400, 120, 'Logo');
-        logo.setScale(0.45);
+        // var logo = this.add.image(400, 120, 'Logo');
+        // logo.setScale(0.45);
 
         // display progress bar
         var progressBar = this.add.graphics();
@@ -74,21 +74,6 @@ export default class PreloaderScene extends Phaser.Scene {
         });
 
         // load assets needed in our game
-        
-        this.load.audio('bgMusic', ['assets/Komiku_-_07_-_Run_against_the_universe.mp3']);
-
-        this.load.image('background', 'assets/background.png');
-
-        this.load.image('menuBG', 'assets/background.png');
-        this.load.image('aboutBG', 'assets/background.png');
-        this.load.image('deathScene', 'assets/deathScene.png');
-
-        this.load.image('Button', 'assets/button1.png');
-        this.load.image('ButtonPressed', 'assets/button1selected.png');
-        this.load.image('box', 'assets/box.png');
-        this.load.image('checkedBox', 'assets/checked1.png');
-        this.load.image('Logo', 'assets/logoBigger.png');
-
         this.load.image('Tank', 'assets/tank.png');
         this.load.image('Rock', 'assets/rock.png');
 
