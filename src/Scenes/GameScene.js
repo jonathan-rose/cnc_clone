@@ -40,7 +40,7 @@ export default class GameScene extends Phaser.Scene {
         // NOT tile px size
         const mapTilesWidth = 32;
         const mapTilesHeight = 32;
-        var map = this.make.tilemap({key: "map1", tileWidth: mapTilesWidth, tileHeight: mapTilesHeight});
+        map = this.make.tilemap({key: "map1", tileWidth: mapTilesWidth, tileHeight: mapTilesHeight});
 
         // First parameter should be name of tileset as seen in Tiled tilesets list
         const tileset = map.addTilesetImage("tiles1", "tiles1");
@@ -123,7 +123,7 @@ export default class GameScene extends Phaser.Scene {
             let x = vec.x;
 
             const currentKey = `${y}x${x}`;
-            const current = map.getTileAt(x, y);
+            const current = map.getTileAt(x, y); // Cannot get reference to map from Create()
 
             const neighbours = [
                 { y: y - 1, x }, // Above
@@ -132,11 +132,17 @@ export default class GameScene extends Phaser.Scene {
                 { y, x: x - 1 }  // Left
             ]
 
-            console.log(neighbours);
-
             for (let i = 0; i < neighbours.length; ++i) {
                 const nY = neighbours[i].y;
                 const nX = neighbours[i].x;
+
+                if (nY < 0 || nY > map.height - 1){
+                    continue;
+                }
+
+                if (nX < 0 || nX > map.width - 1){
+                    continue;
+                }
 
                 const key = `${nY}x${nX}`;
 
@@ -153,6 +159,8 @@ export default class GameScene extends Phaser.Scene {
             }
 
         }
+
+        console.dir(parentForCell);
         
     }
 };

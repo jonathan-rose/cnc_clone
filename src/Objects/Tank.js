@@ -47,8 +47,8 @@ export default class Tank extends Phaser.GameObjects.PathFollower {
     }
 
     getTileXY () {
-        var tile = this.currentMap.getTileAtWorldXY(this.currentTargetCoords.x, this.currentTargetCoords.y);
-        console.log(tile);
+        var tile = this.currentMap.getTileAtWorldXY(this.x, this.y);
+        // console.log(tile);
         var vec = new Phaser.Math.Vector2();
         vec.x = tile.x;
         vec.y = tile.y;
