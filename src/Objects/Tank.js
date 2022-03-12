@@ -41,17 +41,29 @@ export default class Tank extends Phaser.GameObjects.PathFollower {
         this.setPathTime();
     }
 
-    getTile () {
-        var tile = this.currentMap.getTileAtWorldXY(this.currentTargetCoords.x, this.currentTargetCoords.y);
+    getLocationTile () {
+        var tile = this.currentMap.getTileAtWorldXY(this.x, this.y);
         return tile;
     }
 
-    getTileXY () {
+    getLocationTileXY () {
         var tile = this.currentMap.getTileAtWorldXY(this.x, this.y);
-        // console.log(tile);
         var vec = new Phaser.Math.Vector2();
         vec.x = tile.x;
         vec.y = tile.y;
         return vec;     
+    }
+
+    getTargetTile () {
+        var tile = this.currentMap.getTileAtWorldXY(this.currentTargetCoords.x, this.currentTargetCoords.y);
+        return tile;
+    }
+
+    getTargetTileXY () {
+        var tile = this.currentMap.getTileAtWorldXY(this.currentTargetCoords.x, this.currentTargetCoords.y);
+        var vec = new Phaser.Math.Vector2();
+        vec.x = tile.x;
+        vec.y = tile.y;
+        return vec;  
     }
 }

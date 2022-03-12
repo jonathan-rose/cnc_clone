@@ -75,7 +75,7 @@ export default class GameScene extends Phaser.Scene {
 
             tank.makePath();
 
-            this.generatePath();
+            this.generatePath(tank);
 
             tank.startFollow({
                 positionOnPath: true,
@@ -108,59 +108,22 @@ export default class GameScene extends Phaser.Scene {
         mouseLocation.y = inputObject.y;
     }
 
-    generatePath () {
-        const queue = [];
-        const parentForCell = {};
+    generatePath (object) {
+        const start = object.getLocationTile(); // Calls a function that there is no guarantee the object will have
+        const end = object.getTargetTile();
+        const path = [];
 
-        let startTile = tank.getTileXY();
+        console.log(start, end);
 
-        queue.push(startTile);
+        const neighbors = {top: 0, bottom: 0, right: 0, left: 0};
 
-        while (queue.length > 0) {
-            const vec = queue.shift();
+        neighbors.top = end.y - 1;
+        neighbors.bottom = end.y + 1;
+        neighbors.right = end.x + 1;
+        neighbors.left = end.x - 1;
 
-            let y = vec.y;
-            let x = vec.x;
+        console.log(neighbors);
 
-            const currentKey = `${y}x${x}`;
-            const current = map.getTileAt(x, y); // Cannot get reference to map from Create()
 
-            const neighbours = [
-                { y: y - 1, x }, // Above
-                { y, x: x + 1 }, // Right
-                { y: y + 1, x }, // Below
-                { y, x: x - 1 }  // Left
-            ]
-
-            for (let i = 0; i < neighbours.length; ++i) {
-                const nY = neighbours[i].y;
-                const nX = neighbours[i].x;
-
-                if (nY < 0 || nY > map.height - 1){
-                    continue;
-                }
-
-                if (nX < 0 || nX > map.width - 1){
-                    continue;
-                }
-
-                const key = `${nY}x${nX}`;
-
-                if (key in parentForCell) {
-                    continue;
-                }
-
-                parentForCell[key] = {
-                    key: currentKey,
-                    cell: current
-                }
-                
-                queue.push(neighbours[i]);
-            }
-
-        }
-
-        console.dir(parentForCell);
-        
     }
 };
