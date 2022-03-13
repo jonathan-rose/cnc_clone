@@ -113,7 +113,8 @@ export default class GameScene extends Phaser.Scene {
         neighborTiles.forEach((e) => {
             let g = this.chebDistance(e, startTile);    // g = distance
             let h = this.chebDistance(e, endTile);      // h = heuristic (distance from end node)
-            let f = g + h;                          // f = g + h (total cost)
+            let f = g + h;                              // f = g + h (total cost)
+            f = f * e.properties.costFactor;            // costFactor of tile from Tiled 
 
             let tileValue = {g: g, h: h, f: f};
 
