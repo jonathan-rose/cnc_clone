@@ -97,23 +97,23 @@ export default class GameScene extends Phaser.Scene {
     }
 
     generatePath (object) {
-        const start = object.getLocationTile(); // Calls a function that there is no guarantee the object will have
-        const end = object.getTargetTile();
+        const startTile = object.getLocationTile(); // Calls a function that there is no guarantee the object will have
+        const endTile = object.getTargetTile();
         const path = [];
         const tileValues = [];
 
         map.setLayer("terrain");
         // Fix these hardcoded numbers
-        const neighborTiles = map.getTilesWithin(start.x - 1, start.y - 1, 3, 3);
+        const neighborTiles = map.getTilesWithin(startTile.x - 1, startTile.y - 1, 3, 3);
 
         // for (let i = 0; i < neighborTiles.length; i++) {
             
         // }
 
         neighborTiles.forEach((e) => {
-            let g = this.chebDistance(e, start); // g = distance
-            let h = this.chebDistance(e, end); // h = heuristic (distance from end node)
-            let f = g + h;                       // f = g + h (total cost)
+            let g = this.chebDistance(e, startTile);    // g = distance
+            let h = this.chebDistance(e, endTile);      // h = heuristic (distance from end node)
+            let f = g + h;                          // f = g + h (total cost)
 
             let tileValue = {g: g, h: h, f: f};
 
