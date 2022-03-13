@@ -100,17 +100,27 @@ export default class GameScene extends Phaser.Scene {
         const start = object.getLocationTile(); // Calls a function that there is no guarantee the object will have
         const end = object.getTargetTile();
         const path = [];
+        const tileValues = [];
 
         map.setLayer("terrain");
+        // Fix these hardcoded numbers
+        const neighborTiles = map.getTilesWithin(start.x - 1, start.y - 1, 3, 3);
 
-        const neighbors = map.getTilesWithin(start.x - 1, start.y - 1, 3, 3);
+        // for (let i = 0; i < neighborTiles.length; i++) {
+            
+        // }
 
-        const neighborDistances = [];
+        neighborTiles.forEach((e) => {
+            let g = this.chebDistance(e, start); // g = distance
+            let h = this.chebDistance(e, end); // h = heuristic (distance from end node)
+            let f = g + h;                       // f = g + h (total cost)
 
-        neighbors.forEach(e => neighborDistances.push(this.chebDistance(e, start)));
+            let tileValue = {g: g, h: h, f: f};
 
-        console.log(neighbors);
-        console.log(neighborDistances);
+            tileValues.push(tileValue);
+        });
+
+        console.log(tileValues);
     }
 
     chebDistance (start, end) {
