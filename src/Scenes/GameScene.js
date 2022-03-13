@@ -15,7 +15,7 @@ var mouseText;
 var mouseTextLocation = [600, 25];
 var tileText;
 var tileTextLocation = [600, 60];
-var tankLocation = [100, 300];
+var tankLocation = [50, 50];
 var tankPath = new Phaser.Curves.Path();
 var graphics;
 var map;
@@ -43,7 +43,7 @@ export default class GameScene extends Phaser.Scene {
         // First parameter should be name of tileset as seen in Tiled tilesets list
         const tileset = map.addTilesetImage("tiles1", "tiles1");
         
-        var groundLayer = map.createLayer("ground", tileset, 0, 0);
+        var groundLayer = map.createLayer("terrain", tileset, 0, 0);
         var rocksLayer = map.getObjectLayer("rockObjects");
 
         var rocks = this.add.group();
@@ -61,7 +61,7 @@ export default class GameScene extends Phaser.Scene {
 
         this.input.on('pointerdown', function (pointer) {
 
-            map.setLayer("ground");
+            map.setLayer("terrain");
             var tileAtMouseXY = map.getTileAtWorldXY(mouseLocation.x, mouseLocation.y);
 
             tileText.text = "tile x: " + map.getTileAtWorldXY(mouseLocation.x, mouseLocation.y).x + "\n" + "tile y: " + map.getTileAtWorldXY(mouseLocation.x, mouseLocation.y).y;
@@ -101,17 +101,24 @@ export default class GameScene extends Phaser.Scene {
         const end = object.getTargetTile();
         const path = [];
 
-        console.log(start, end);
+        map.setLayer("terrain");
 
-        const neighbors = {top: 0, bottom: 0, right: 0, left: 0};
+        const neighbors = map.getTilesWithin(start.x - 1, start.y - 1, 3, 3);
 
-        neighbors.top = end.y - 1;
-        neighbors.bottom = end.y + 1;
-        neighbors.right = end.x + 1;
-        neighbors.left = end.x - 1;
+        const neighborDistances = [];
+
+        neighbors.forEach(e => neighborDistances.push(this.chebDistance(e, start)));
 
         console.log(neighbors);
+        console.log(neighborDistances);
+    }
 
+    chebDistance (start, end) {
+        let x = Math.abs(end.x - start.x);
+        let y = Math.abs(end.y - start.y);
 
+        let result = Math.max(x, y);
+
+        return result;
     }
 };

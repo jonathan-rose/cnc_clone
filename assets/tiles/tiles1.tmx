@@ -5,8 +5,18 @@
  </editorsettings>
  <tileset firstgid="1" name="tiles1" tilewidth="32" tileheight="32" tilecount="3" columns="3">
   <image source="tiles1.png" width="96" height="32"/>
+  <tile id="1">
+   <properties>
+    <property name="costFactor" type="int" value="1"/>
+   </properties>
+  </tile>
+  <tile id="2">
+   <properties>
+    <property name="costFactor" type="int" value="-1"/>
+   </properties>
+  </tile>
  </tileset>
- <layer id="1" name="ground" width="32" height="32">
+ <layer id="1" name="terrain" width="32" height="32">
   <data encoding="csv">
 2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,3,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
 2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,3,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
